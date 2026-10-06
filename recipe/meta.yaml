@@ -1,5 +1,5 @@
 {% set name = "wolframclient" %}
-{% set version = "1.1.7" %}
+{% set version = "1.4.0" %}
 
 
 package:
@@ -8,24 +8,24 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/wolframclient-{{ version }}.tar.gz
-  sha256: 327feb03d6200255268aa57395c9f0984b0f4d3711f797ea97e4afd8f38d7d21
+  sha256: 59f1f0a71257fa79c444cc9489097fe74e2c7890157f252a961cea406e17e9fb
 
 build:
   number: 0
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
+    - python {{ python_min }}
+    - setuptools
     - pip
-    - python >=3.5
   run:
+    - python >={{ python_min }}
     - aiohttp
     - certifi >=2017.4.17
     - numpy
     - oauthlib
-    - pip
-    - python >=3.5
     - pytz
     - pyzmq
     - requests
@@ -37,6 +37,7 @@ test:
   commands:
     - pip check
   requires:
+    - python {{ python_min }}
     - pip
 
 about:
